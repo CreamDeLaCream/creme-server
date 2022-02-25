@@ -70,6 +70,10 @@ THIRD_PARTY_APPS = [
 # 프로젝트에서 생성한 앱
 LOCAL_APPS = [
     "apps.core",
+    "apps.users",
+    "apps.analysis",
+    "apps.dogs",
+    "apps.questions",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -114,6 +118,8 @@ WSGI_APPLICATION = "config.wsgi.application"
 # ------------------------------------------------
 # 데이터 베이스
 # ------------------------------------------------
+# AUTH_USER_MODEL ="<앱이름>.<유저모델이름>"
+AUTH_USER_MODEL = "users.User"
 
 DATABASES = {
     "default": {
