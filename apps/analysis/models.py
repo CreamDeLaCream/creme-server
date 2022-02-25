@@ -1,3 +1,58 @@
-# from django.db import models
+from django.contrib.auth import get_user_model
+from django.db import models
+from django.utils.translation import gettext_lazy as _
 
-# Create your models here.
+from apps.core.models import TimeStampedMixin
+from apps.dogs.models import Dog
+
+
+class DogEmotion(models.Model):
+
+    emotion = models.CharField(verbose_name=_("emotion"), max_length=10)
+    description = models.TextField(verbose_name=_("emotion description"))
+
+    class Meta:
+        verbose_name = _("dog emotion")
+        db_table = "dog_emotion"
+
+
+class Analysis(TimeStampedMixin):
+
+    dog = models.ForeignKey(Dog, verbose_name=_("dog"))
+    dog_name = models.CharField(verbose_name=_("dog name"), max_length=10, blank=True)
+    dog_age = models.IntegerField(verbose_name=_("dog age"), blank=True)
+    # slug default - > nanoid (생성할 떄 기본값으로 nanoid가 생성되게)
+    slug = models.SlugField(verbose_name=_("analysis slug"), max_length=40)
+
+    dog_emotion = models.ForeignKey(
+        DogEmotion, verbose_name=_("dog emotion"), on_delete=models.CASCADE
+    )
+    dog_emotion_percentage = models.FloatField(verbose_name=_("dog emotion percentage"))
+    dog_coordinate = models.CharField(verbose_name=_("dog coordinate"), max_length=20)
+    human_emotion = models.CharField(verbose_name=_("human emotion"), max_length=10)
+    human_emotion_percentage = models.FloatField(
+        verbose_name=_("human emotion percentage")
+    )
+    human_coordinate = models.CharField(
+        verbose_name=_("human coordinate"), max_length=20
+    )
+
+    is_completed = models.BoolField(
+        verbose_name=_("analysis is completed"), default=False
+    )
+
+    class Meta:
+        verbose_name = _("analysis")
+        db_table = "analysis"
+
+
+class DogAnalysisRecord(TimeStampedMixin):
+
+    # user FK (django.contrib.auth -> get_user_model() 을 사용하여 모델을 가져온다)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    analysis = models.ForeignKey(Analysis, on_delete=models.CASCADE)
+    memo = models.CharField(verbose_name=_("memo"), max_length=200)
+
+    class Meta:
+        verbose_name = _("dog analysis record")
+        db_table = "dog_analysis_record"
