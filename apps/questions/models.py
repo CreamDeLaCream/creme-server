@@ -12,7 +12,9 @@ class Question(models.Model):
 
 
 class QuestionChoice(models.Model):
-
+    question = models.ForeignKey(
+        Question, verbose_name=_("question"), on_delete=models.CASCADE
+    )
     choice_index = models.IntegerField(verbose_name=_("index"))
     content = models.TextField(verbose_name=_("question choice content"))
     solution = models.TextField(verbose_name=_("question choice solution"))
@@ -20,3 +22,6 @@ class QuestionChoice(models.Model):
     class Meta:
         verbose_name = _("question choice")
         db_table = "question_choice"
+
+        # TODO: unique: choice_index, question
+        # unique_together ( deprecated 될 예정 ) UniqueConstraint 으로 해결
