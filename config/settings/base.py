@@ -22,6 +22,10 @@ CONFIG_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, ".static")
 
+# media directory
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, ".media")
+
 # 후행 슬래시 비활성화
 APPEND_SLASH = False
 

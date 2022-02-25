@@ -1,3 +1,19 @@
-# from django.contrib import admin
+from django.contrib import admin
 
-# Register your models here.
+from .models import Question, QuestionChoice
+
+
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "question",
+    )
+
+
+@admin.register(QuestionChoice)
+class QuestionChoiceAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "content",
+    )

@@ -1,0 +1,1 @@
+[{"model": "questions.question", "pk": 1, "fields": {"question": "Q1. 오늘 OO(이)의 감정 상태는?"}}, {"model": "questions.question", "pk": 2, "fields": {"question": "Q2. 오늘 강아지가 홀로 보낸 시간은?"}}, {"model": "questions.question", "pk": 3, "fields": {"question": "Q3. 오늘 강아지와의 산책한 횟수는?"}}, {"model": "questions.question", "pk": 4, "fields": {"question": "Q4. 오늘 강아지에게 간식을 준 횟수는?"}}]
