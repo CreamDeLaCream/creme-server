@@ -1,3 +1,5 @@
+# 참고: https://docs.djangoproject.com/ko/4.0/ref/contrib/admin/
+
 from django.contrib import admin
 
 from .models import Analysis, DogAnalysisRecord, DogEmotion

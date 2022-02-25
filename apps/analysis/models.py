@@ -28,7 +28,7 @@ class Analysis(TimeStampedMixin):
     slug = models.SlugField(verbose_name=_("analysis slug"), max_length=40, null=True)
 
     dog = models.ForeignKey(
-        Dog, verbose_name=_("dog"), null=True, on_delete=models.CASCADE
+        Dog, verbose_name=_("dog"), blank=True, null=True, on_delete=models.CASCADE
     )
     # slug default - > nanoid (생성할 떄 기본값으로 nanoid가 생성되게)
 
@@ -43,19 +43,19 @@ class Analysis(TimeStampedMixin):
         DogEmotion, verbose_name=_("dog emotion"), null=True, on_delete=models.CASCADE
     )
     dog_emotion_percentage = models.FloatField(
-        verbose_name=_("dog emotion percentage"), null=True
+        verbose_name=_("dog emotion percentage"), blank=True, null=True
     )
     dog_coordinate = models.CharField(
-        verbose_name=_("dog coordinate"), null=True, max_length=20
+        verbose_name=_("dog coordinate"), blank=True, null=True, max_length=20
     )
     human_emotion = models.CharField(
-        verbose_name=_("human emotion"), null=True, max_length=10
+        verbose_name=_("human emotion"), blank=True, null=True, max_length=10
     )
     human_emotion_percentage = models.FloatField(
-        verbose_name=_("human emotion percentage"), null=True
+        verbose_name=_("human emotion percentage"), blank=True, null=True
     )
     human_coordinate = models.CharField(
-        verbose_name=_("human coordinate"), null=True, max_length=20
+        verbose_name=_("human coordinate"), blank=True, null=True, max_length=20
     )
 
     is_completed = models.BooleanField(
