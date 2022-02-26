@@ -10,6 +10,9 @@ class Question(models.Model):
         verbose_name = _("question")
         db_table = "question"
 
+    def __str__(self):
+        return self.question
+
 
 class QuestionChoice(models.Model):
     question = models.ForeignKey(
@@ -22,6 +25,3 @@ class QuestionChoice(models.Model):
     class Meta:
         verbose_name = _("question choice")
         db_table = "question_choice"
-
-        # TODO: unique: choice_index, question
-        # unique_together ( deprecated 될 예정 ) UniqueConstraint 으로 해결
