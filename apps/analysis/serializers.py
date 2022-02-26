@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from apps.analysis.models import Analysis
-from apps.questions.serializers import ChoiceSolutionSerializer
+from apps.questions.serializers import QuestionChoiceSerializer
 
 """
 
@@ -19,24 +19,31 @@ class AnalysisPetSerializer(serializers.ModelSerializer):
     """감정 상태 분석 step 1 강아지 표정"""
 
     class Meta:
-        Model = Analysis
+        model = Analysis
         fields = (
+            "slug",
             "dog_name",
             "dog_age",
             "image",
         )
+        read_only_fields = ("slug",)
+        extra_kwargs = {
+            "dog_name": {"required": True},
+            "dog_age": {"required": True},
+            "image": {"required": True},
+        }
 
 
 class AnalysisPersonSerializer(serializers.ModelSerializer):
     """감정 상태 분석 step 2 사람 답변"""
 
     class Meta:
-        Model = Analysis
+        model = Analysis
         fields = ("answer",)
 
 
 class AnalysisSerializer(serializers.ModelSerializer):
-    solution = ChoiceSolutionSerializer(many=True)
+    solution = QuestionChoiceSerializer(many=True)
 
     class Meta:
         model = Analysis

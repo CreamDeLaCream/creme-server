@@ -68,7 +68,7 @@ class QuestionChoiceSerializer(serializers.ModelSerializer):
         )
 
 
-class QuestionSerializer(serializers.Modeleralizer):
+class QuestionSerializer(serializers.ModelSerializer):
     choices = QuestionChoiceSerializer(many=True)
 
     class Meta:
