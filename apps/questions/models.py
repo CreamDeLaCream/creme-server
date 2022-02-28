@@ -10,12 +10,18 @@ class Question(models.Model):
         verbose_name = _("question")
         db_table = "question"
 
+    def __str__(self):
+        return self.question
+
 
 class QuestionChoice(models.Model):
     question = models.ForeignKey(
-        Question, verbose_name=_("question"), on_delete=models.CASCADE
+        Question,
+        verbose_name=_("question"),
+        related_name="question_choices",
+        on_delete=models.CASCADE,
     )
-    choice_index = models.IntegerField(verbose_name=_("index"))
+    sort_order = models.IntegerField(verbose_name=_("question choice order"))
     content = models.TextField(verbose_name=_("question choice content"))
     solution = models.TextField(verbose_name=_("question choice solution"))
 
@@ -23,5 +29,8 @@ class QuestionChoice(models.Model):
         verbose_name = _("question choice")
         db_table = "question_choice"
 
-        # TODO: unique: choice_index, question
-        # unique_together ( deprecated 될 예정 ) UniqueConstraint 으로 해결
+        constraints = [
+            models.UniqueConstraint(
+                fields=["question", "sort_order"], name="unique question choice"
+            )
+        ]
