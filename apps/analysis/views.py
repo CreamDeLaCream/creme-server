@@ -1,4 +1,5 @@
-from rest_framework import generics, mixins, parsers
+from rest_framework import parsers
+from rest_framework.generics import CreateAPIView
 
 from .models import Analysis
 from .serializers import (
@@ -8,14 +9,9 @@ from .serializers import (
 )
 
 
-class AnalysisPetView(
-    generics.GenericAPIView,
-    mixins.CreateModelMixin,
-):
+class AnalysisPetView(CreateAPIView):
+    """분석 step 1"""
+
     serializer_class = AnalysisPetSerializer
     queryset = Analysis.objects.all()
     parser_classes = (parsers.MultiPartParser,)
-
-    def post(self, request, *args, **kwargs):
-        """분석 step 1"""
-        return self.create(request, *args, **kwargs)
