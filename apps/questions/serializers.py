@@ -9,29 +9,21 @@ class QuestionChoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestionChoice
         fields = (
-            "choice_index",
+            "sort_order",
             "content",
         )
 
 
 class QuestionSerializer(serializers.ModelSerializer):
-    choice_index = serializers.SerializerMethodField()
-    content = serializers.SerializerMethodField()
+    question_choices = QuestionChoiceSerializer(many=True, read_only=True)
 
     class Meta:
         model = Question
         fields = (
             "id",
             "question",
-            "choice_index",
-            "content",
+            "question_choices",
         )
-
-    def get_choice_index(self, obj):
-        return obj.choice_index
-
-    def get_content(self, obj):
-        return obj.content
 
 
 class ChoiceSolutionSerializer(serializers.ModelSerializer):

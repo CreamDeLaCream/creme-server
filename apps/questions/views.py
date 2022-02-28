@@ -1,16 +1,18 @@
 # from django.shortcuts import render
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 
-from .models import QuestionChoice
+from .models import Question
 from .serializers import QuestionSerializer
 
+# from rest_framework.response import Response
 
-class QuestionListAPIView(APIView):
+
+class QuestionListAPIView(ListAPIView):
     """
     Question List class
     """
 
-    def get(self, request):
-        serializer = QuestionSerializer(QuestionChoice.objects.all(), many=True)
-        return Response(serializer.data)
+    queryset = Question.objects.prefetch_related("choices").all()
+    serializer_class = QuestionSerializer
+
+    # permission_classes =
