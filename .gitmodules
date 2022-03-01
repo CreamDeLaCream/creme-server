@@ -1,4 +1,4 @@
-[submodule "creme-ai"]
-	path = creme-ai
+[submodule "creme_ai"]
+	path = creme_ai
 	url = https://github.com/CreamDeLaCream/creme-ai.git
 	branch = model-serving
