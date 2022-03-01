@@ -50,7 +50,7 @@ class AnalysisPetSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
 
-        dog = validated_data["dog"]
+        dog = validated_data.get("dog")
 
         # TODO: 요청받은 dog 요청한 회원과 연결되어있는지 체크
 
