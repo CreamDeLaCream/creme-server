@@ -1,15 +1,26 @@
 [tool.poetry]
-authors = ["Yeonggwang <immutable000@gmail.com>"]
-description = "creme backend project"
 name = "creme-server"
-version = "0.0.1"
+version = "0.1.0"
+description = ""
+authors = ["rigyeonghong <zxcvbee@naver.com>"]
 
 [tool.poetry.dependencies]
-Django = "4.0.2"
-djangorestframework = "3.13.1"
-gunicorn = "20.1.0"
-python = "^3.8"
+python = "3.8"
+Django = "^4.0.2"
+djangorestframework = "^3.13.1"
+cmake = "^3.22.2"
+dlib = "^19.23.0"
+tensorflow = "^2.8.0"
+imutils = "^0.5.4"
+pandas = "^1.4.1"
+opencv-python = "^4.5.5"
+requests = "^2.27.1"
+rmn = "^3.0.3"
+torch = "^1.10.2"
 Pillow = "^9.0.1"
+nanoid = "^2.0.0"
+drf-yasg = "^1.20.0"
+django-cors-headers = "^3.11.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "4.0.1"
@@ -19,8 +30,8 @@ django-silk = "4.2.0"
 pre-commit = "2.17.0"
 
 [build-system]
-build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 # isort
 [tool.isort]
