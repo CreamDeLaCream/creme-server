@@ -69,6 +69,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "rest_framework",
     "silk",
+    "drf_yasg",
 ]
 
 # 프로젝트에서 생성한 앱
