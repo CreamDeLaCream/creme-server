@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-26 00:49+0900\n"
+"POT-Creation-Date: 2022-02-27 03:54+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,75 +18,75 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: apps/analysis/models.py:13
+#: apps/analysis/models.py:15
 msgid "emotion"
 msgstr "감정"
 
-#: apps/analysis/models.py:14
+#: apps/analysis/models.py:17
 msgid "emotion description"
 msgstr "감정 설명"
 
-#: apps/analysis/models.py:17 apps/analysis/models.py:43
+#: apps/analysis/models.py:20 apps/analysis/models.py:50
 msgid "dog emotion"
 msgstr "강아지 감정"
 
-#: apps/analysis/models.py:24 apps/dogs/models.py:9
+#: apps/analysis/models.py:26 apps/dogs/models.py:9
 msgid "dog name"
 msgstr "강아지 이름"
 
-#: apps/analysis/models.py:26
+#: apps/analysis/models.py:27
 msgid "dog age"
 msgstr "강아지 나이"
 
-#: apps/analysis/models.py:28
+#: apps/analysis/models.py:30
 msgid "analysis slug"
 msgstr "분석 Slug"
 
-#: apps/analysis/models.py:31 apps/dogs/models.py:14
+#: apps/analysis/models.py:37 apps/dogs/models.py:14
 msgid "dog"
 msgstr "강아지"
 
-#: apps/analysis/models.py:37 apps/questions/models.py:21
+#: apps/analysis/models.py:42 apps/questions/models.py:23
 msgid "question choice"
 msgstr "질문 선택지"
 
-#: apps/analysis/models.py:41
+#: apps/analysis/models.py:47
 msgid "analysis image"
 msgstr "분석 이미지"
 
-#: apps/analysis/models.py:46
+#: apps/analysis/models.py:54
 msgid "dog emotion percentage"
 msgstr "강아지 감정 인식 퍼센트"
 
-#: apps/analysis/models.py:49
+#: apps/analysis/models.py:58
 msgid "dog coordinate"
 msgstr "강아지 감정 인식 좌표"
 
-#: apps/analysis/models.py:52
+#: apps/analysis/models.py:62
 msgid "human emotion"
 msgstr "사람 감정"
 
-#: apps/analysis/models.py:55
+#: apps/analysis/models.py:70
 msgid "human emotion percentage"
 msgstr "사람 감정 퍼센트"
 
-#: apps/analysis/models.py:58
+#: apps/analysis/models.py:74
 msgid "human coordinate"
 msgstr "사람 감정 인식 좌표"
 
-#: apps/analysis/models.py:62
-msgid "analysis is completed"
-msgstr "분석 완료 여부"
+#: apps/analysis/models.py:77
+msgid "analysis status"
+msgstr "분석 진행 상태"
 
-#: apps/analysis/models.py:66
+#: apps/analysis/models.py:84
 msgid "analysis"
 msgstr "분석"
 
-#: apps/analysis/models.py:116
+#: apps/analysis/models.py:93
 msgid "memo"
 msgstr "메모"
 
-#: apps/analysis/models.py:119
+#: apps/analysis/models.py:96
 msgid "dog analysis record"
 msgstr "강아지 감정 기록"
 
@@ -107,18 +107,19 @@ msgid "dog image"
 msgstr "강아지 사진"
 
 #: apps/questions/models.py:7 apps/questions/models.py:10
+#: apps/questions/models.py:16
 msgid "question"
 msgstr "질문"
 
-#: apps/questions/models.py:16
+#: apps/questions/models.py:18
 msgid "index"
 msgstr "순서"
 
-#: apps/questions/models.py:17
+#: apps/questions/models.py:19
 msgid "question choice content"
 msgstr "질문 선택지 내용"
 
-#: apps/questions/models.py:18
+#: apps/questions/models.py:20
 msgid "question choice solution"
 msgstr "질문 선택지 솔루션"
 
@@ -145,3 +146,6 @@ msgstr "사용자"
 #: config/settings/base.py:149
 msgid "Korean"
 msgstr "한국어"
+
+#~ msgid "analysis is completed"
+#~ msgstr "분석 완료 여부"
