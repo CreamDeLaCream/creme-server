@@ -55,8 +55,9 @@ class AnalysisPetSerializer(serializers.ModelSerializer):
         # TODO: 요청받은 dog 요청한 회원과 연결되어있는지 체크
 
         # 한국식나이 = 현재 년도 - 태어난 년도 + 1
-        validated_data["dog_age"] = date.today().year - dog.birth.year + 1
-        validated_data["dog_name"] = dog.name
+        if dog is not None:
+            validated_data["dog_age"] = date.today().year - dog.birth.year + 1
+            validated_data["dog_name"] = dog.name
 
         analysis = Analysis.objects.create(**validated_data)
 
