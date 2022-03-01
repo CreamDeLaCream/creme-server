@@ -1,0 +1,3 @@
+[submodule "creme-ai"]
+	path = creme-ai
+	url = https://github.com/CreamDeLaCream/creme-ai.git
