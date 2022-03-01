@@ -12,7 +12,7 @@ class QuestionListAPIView(ListAPIView):
     Question List class
     """
 
-    queryset = Question.objects.prefetch_related("choices").all()
+    queryset = Question.objects.prefetch_related("question_choices").all()
     serializer_class = QuestionSerializer
 
     # permission_classes =

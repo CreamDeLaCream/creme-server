@@ -67,8 +67,10 @@ DJANGO_APPS = [
 
 # 써드파티 라이브러리
 THIRD_PARTY_APPS = [
+    "corsheaders",
     "rest_framework",
     "silk",
+    "drf_yasg",
 ]
 
 # 프로젝트에서 생성한 앱
@@ -87,6 +89,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # 미들웨어
 # ------------------------------------------------
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
