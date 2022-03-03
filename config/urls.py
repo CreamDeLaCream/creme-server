@@ -10,6 +10,7 @@ from rest_framework import permissions
 urlpatterns = [
     path("analysis/", include("apps.analysis.urls")),
     path("questions/", include("apps.questions.urls")),
+    path("dogs/", include("apps.dogs.urls")),
 ]
 
 if settings.DEBUG:
