@@ -25,6 +25,10 @@ class QuestionChoice(models.Model):
     content = models.TextField(verbose_name=_("question choice content"))
     solution = models.TextField(verbose_name=_("question choice solution"))
 
+    increase_percentage = models.DecimalField(
+        verbose_name=_("rate of increase"), default=0.0, max_digits=3, decimal_places=2
+    )
+
     class Meta:
         verbose_name = _("question choice")
         db_table = "question_choice"

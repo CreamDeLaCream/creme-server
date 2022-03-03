@@ -93,7 +93,7 @@ class Analysis(TimeStampedMixin):
         choices=STATUS_CHOICES,
         max_length=20,
     )
-    chemistry = models.DecimalField(
+    chemistry_percentage = models.DecimalField(
         verbose_name=_("chemistry"), default=0.0, max_digits=3, decimal_places=2
     )
 
