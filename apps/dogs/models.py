@@ -9,7 +9,7 @@ class Dog(TimeStampedMixin):
 
     name = models.CharField(verbose_name=_("dog name"), max_length=30)
     birth = models.DateTimeField(verbose_name=_("date of birth"))
-    image = models.ImageField(verbose_name=_("dog image"))
+    image = models.ImageField(verbose_name=_("dog image"), blank=True, null=True)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
     class Meta:

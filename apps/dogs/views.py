@@ -1,13 +1,44 @@
 # from django.shortcuts import render
-from rest_framework.generics import ListAPIView
+import datetime
 
-from .models import DogKeyword
-from .serializers import DogKeywordSerializer
+from rest_framework.generics import (
+    ListAPIView,
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+)
+
+from .models import Dog, DogKeyword
+from .serializers import DogKeywordSerializer, DogSerializer
+
+
+class DogListAPIView(ListCreateAPIView):
+    """
+    Dog List class
+    """
+
+    nowYear = datetime.datetime.now().strftime("%Y")
+
+    queryset = Dog.objects.all()
+
+    serializer_class = DogSerializer
+
+    # TODO: permission_classes, Birth -> age
+
+
+class DogAPIView(RetrieveUpdateDestroyAPIView):
+    """
+    Dog class
+    """
+
+    queryset = Dog.objects.all()
+    serializer_class = DogSerializer
+
+    # TODO: permission_classes
 
 
 class DogKeywordListAPIView(ListAPIView):
     """
-    DogKeyword List class
+    Dog Keyword List class
     """
 
     queryset = DogKeyword.objects.all()

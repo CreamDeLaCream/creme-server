@@ -1,6 +1,19 @@
 from rest_framework import serializers
 
-from .models import DogKeyword
+from .models import Dog, DogKeyword
+
+
+class DogSerializer(serializers.ModelSerializer):
+    """강아지 정보"""
+
+    class Meta:
+        model = Dog
+        fields = (
+            "id",
+            "name",
+            "birth",
+            "image",
+        )
 
 
 class DogKeywordSerializer(serializers.ModelSerializer):
