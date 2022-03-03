@@ -20,6 +20,14 @@ class DogEmotion(models.Model):
         verbose_name = _("dog emotion")
         db_table = "dog_emotion"
 
+    @staticmethod
+    def choose_emotion(emotion: str) -> str:
+        emotion = emotion.lower()
+        for choice in EMOTION_CHOICES:
+            if choice[1] == emotion:
+                return choice[0]
+        return ""
+
 
 class Analysis(TimeStampedMixin):
 
@@ -50,8 +58,11 @@ class Analysis(TimeStampedMixin):
         DogEmotion, verbose_name=_("dog emotion"), null=True, on_delete=models.CASCADE
     )
 
-    dog_emotion_percentage = models.FloatField(
-        verbose_name=_("dog emotion percentage"), blank=True, null=True
+    dog_emotion_percentage = models.DecimalField(
+        verbose_name=_("dog emotion percentage"),
+        default=0.0,
+        max_digits=4,
+        decimal_places=2,
     )
 
     dog_coordinate = models.CharField(
@@ -66,8 +77,11 @@ class Analysis(TimeStampedMixin):
         choices=EMOTION_CHOICES,
     )
 
-    human_emotion_percentage = models.FloatField(
-        verbose_name=_("human emotion percentage"), blank=True, null=True
+    human_emotion_percentage = models.DecimalField(
+        verbose_name=_("human emotion percentage"),
+        default=0.0,
+        max_digits=4,
+        decimal_places=2,
     )
 
     human_coordinate = models.CharField(
@@ -78,6 +92,9 @@ class Analysis(TimeStampedMixin):
         default=UNKNOWN,
         choices=STATUS_CHOICES,
         max_length=20,
+    )
+    chemistry = models.DecimalField(
+        verbose_name=_("chemistry"), default=0.0, max_digits=3, decimal_places=2
     )
 
     class Meta:
