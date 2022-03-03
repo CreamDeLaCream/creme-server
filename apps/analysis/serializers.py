@@ -1,10 +1,14 @@
+import json
 from datetime import date
 
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
-from apps.analysis.models import Analysis
-from apps.dogs.models import Dog
+from apps.analysis.models import Analysis, DogEmotion
 from apps.questions.serializers import QuestionChoiceSerializer
+
+from .apps import AnalysisConfig
+from .choices import UPLOAD
 
 """
 
@@ -52,7 +56,7 @@ class AnalysisPetSerializer(serializers.ModelSerializer):
 
         dog = validated_data.get("dog")
 
-        # TODO: 요청받은 dog 요청한 회원과 연결되어있는지 체크
+        # TODO: 요청받은 dog 요청한 회원과 연결되어있는지
 
         # 한국식나이 = 현재 년도 - 태어난 년도 + 1
         if dog is not None:
@@ -61,7 +65,38 @@ class AnalysisPetSerializer(serializers.ModelSerializer):
 
         analysis = Analysis.objects.create(**validated_data)
 
-        # TODO: 분석 로직 ai 연결 필요
+        try:
+            # 첫번째 index - > 가장 높은 퍼센트 감정
+            # 마지막 index - > 좌표
+            deserialize_json = json.loads(
+                AnalysisConfig.dog_ai_model.predict(analysis.image.path)
+            )
+
+            dog_emotion = deserialize_json[0]
+
+            coordinate = deserialize_json[-1]
+            coordinate_text = ",".join(
+                str(x) for x in coordinate["prob"][0] + coordinate["prob"][1]
+            )
+
+            emotion = DogEmotion.objects.get(
+                emotion=DogEmotion.choose_emotion(dog_emotion["emotion"])
+            )
+
+            analysis.dog_emotion = emotion
+            analysis.dog_emotion_percentage = dog_emotion["prob"] * 100.0
+            analysis.dog_coordinate = coordinate_text
+            analysis.status = UPLOAD
+            analysis.save()
+
+        except Exception as e:
+            # logger.exception(e)
+            # logger.debug("강아지 사진을 분석할 수 없음")
+            print(e)
+            print("강아지 사진을 분석할 수 없음")
+            raise ValidationError("강아지 사진을 분석할 수 없습니다.")
+
+        # TODO: 사람 감정분석 ( 사람 인식은 필수가 아니므로 exception raise 불 필요)
 
         return analysis
 
