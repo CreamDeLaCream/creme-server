@@ -101,7 +101,7 @@ class AnalysisPetSerializer(serializers.ModelSerializer):
         return analysis
 
 
-class AnalysisPersonSerializer(serializers.ModelSerializer):
+class AnalysisHumanSerializer(serializers.ModelSerializer):
     """감정 상태 분석 step 2 사람 답변"""
 
     class Meta:
