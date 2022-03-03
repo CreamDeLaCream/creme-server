@@ -48,13 +48,13 @@ class Dog(TimeStampedMixin):
 class DogCharacter(models.Model):
 
     dog = models.ForeignKey(
-        "Dog",
+        "dogs.Dog",
         verbose_name=_("dog"),
         on_delete=models.CASCADE,
     )
 
     dog_keyword = models.ForeignKey(
-        "DogKeyword",
+        "dogs.DogKeyword",
         on_delete=models.CASCADE,
         verbose_name=_("dog keyword"),
     )

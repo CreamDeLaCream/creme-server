@@ -1,6 +1,3 @@
-# from django.shortcuts import render
-import datetime
-
 from rest_framework.generics import (
     ListAPIView,
     ListCreateAPIView,
@@ -16,13 +13,11 @@ class DogListAPIView(ListCreateAPIView):
     Dog List class
     """
 
-    nowYear = datetime.datetime.now().strftime("%Y")
-
     queryset = Dog.objects.all()
 
     serializer_class = DogSerializer
 
-    # TODO: permission_classes, Birth -> age
+    # TODO: permission_classes
 
 
 class DogAPIView(RetrieveUpdateDestroyAPIView):
