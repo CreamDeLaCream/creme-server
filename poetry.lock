@@ -237,7 +237,7 @@ pytz = "*"
 
 [[package]]
 name = "dlib"
-version = "19.23.0"
+version = "19.8.2"
 description = "A toolkit for making real world machine learning and data analysis applications"
 category = "main"
 optional = false
@@ -1235,10 +1235,6 @@ django-cors-headers = [
     {file = "django-cors-headers-3.11.0.tar.gz", hash = "sha256:eb98389bf7a2afc5d374806af4a9149697e3a6955b5a2dc2bf049f7d33647456"},
     {file = "django_cors_headers-3.11.0-py3-none-any.whl", hash = "sha256:a22be2befd4069c4fc174f11cf067351df5c061a3a5f94a01650b4e928b0372b"},
 ]
-django-cors-headers = [
-    {file = "django-cors-headers-3.11.0.tar.gz", hash = "sha256:eb98389bf7a2afc5d374806af4a9149697e3a6955b5a2dc2bf049f7d33647456"},
-    {file = "django_cors_headers-3.11.0-py3-none-any.whl", hash = "sha256:a22be2befd4069c4fc174f11cf067351df5c061a3a5f94a01650b4e928b0372b"},
-]
 django-silk = [
     {file = "django-silk-4.2.0.tar.gz", hash = "sha256:fcc2e3b2d20aab24a0b4b856d9692c532f8071b0e678cb5f4de47b802e85fe3e"},
     {file = "django_silk-4.2.0-py3-none-any.whl", hash = "sha256:5e70b5351f04e3c4ea4fe6bc16c95bfee776006422dd5e7827e6e3db23dc41ec"},
@@ -1248,7 +1244,7 @@ djangorestframework = [
     {file = "djangorestframework-3.13.1.tar.gz", hash = "sha256:0c33407ce23acc68eca2a6e46424b008c9c02eceb8cf18581921d0092bc1f2ee"},
 ]
 dlib = [
-    {file = "dlib-19.23.0.tar.gz", hash = "sha256:d026f70185d243b4e7cc20c5eece71e744edadb6cc7a7783dd98cb97c5a11f20"},
+    {file = "dlib-19.8.2.tar.gz", hash = "sha256:3027573c53a4c797c829e38a9a161f224e1d600b7969290795cfedd28f8976dc"},
 ]
 drf-yasg = [
     {file = "drf-yasg-1.20.0.tar.gz", hash = "sha256:d50f197c7f02545d0b736df88c6d5cf874f8fea2507ad85ad7de6ae5bf2d9e5a"},
