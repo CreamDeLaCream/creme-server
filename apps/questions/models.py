@@ -1,3 +1,5 @@
+from ast import keyword
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -38,3 +40,24 @@ class QuestionChoice(models.Model):
                 fields=["question", "sort_order"], name="unique question choice"
             )
         ]
+
+
+class Need(models.Model):
+
+    choice = models.ForeignKey("questions.QuestionChoice", on_delete=models.CASCADE)
+    name = models.CharField(verbose_name=_("keyword"), max_length=30)
+    description = models.TextField(verbose_name=_("description"))
+
+    class Meta:
+        verbose_name = _("necessary")
+        db_table = "need"
+
+
+class AnalysisNeed(models.Model):
+
+    question = models.ForeignKey("questions.Need", on_delete=models.CASCADE)
+    analysis = models.ForeignKey("analysis.Analysis", on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = _("analysis need")
+        db_table = "analysis_need"

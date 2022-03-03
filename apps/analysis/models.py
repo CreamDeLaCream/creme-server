@@ -14,7 +14,7 @@ class DogEmotion(models.Model):
     emotion = models.CharField(
         verbose_name=_("emotion"), max_length=10, choices=EMOTION_CHOICES
     )
-    description = models.TextField(verbose_name=_("emotion description"))
+    description = models.TextField(verbose_name=_("description"))
 
     class Meta:
         verbose_name = _("dog emotion")
