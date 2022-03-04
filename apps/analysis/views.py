@@ -1,7 +1,9 @@
 import cv2
-from django.http import HttpResponse
-from rest_framework import parsers
-from rest_framework.generics import CreateAPIView
+from django.http import Http404, HttpResponse
+from django.shortcuts import get_object_or_404
+from numpy import generic
+from rest_framework import generics, parsers
+from rest_framework.generics import CreateAPIView, UpdateAPIView
 
 from creme_ai.dogemotion import dog_model
 from creme_ai.humanemotion import human_model
@@ -22,8 +24,11 @@ class AnalysisPetView(CreateAPIView):
     parser_classes = (parsers.MultiPartParser,)
 
 
-class AnalysisHumanView(CreateAPIView):
+class AnalysisHumanView(generics.UpdateAPIView):
     """분석 step 2"""
 
+    def get_object(self):
+        slug = self.request.query_params.get("slug", None)
+        return get_object_or_404(Analysis, slug=slug)
+
     serializer_class = AnalysisHumanSerializer
-    queryset = Analysis.objects.all()

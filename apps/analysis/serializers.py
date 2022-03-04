@@ -1,5 +1,4 @@
 import json
-from datetime import date
 
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
@@ -104,6 +103,24 @@ class AnalysisPetSerializer(serializers.ModelSerializer):
 
 class AnalysisHumanSerializer(serializers.ModelSerializer):
     """감정 상태 분석 step 2 사람 답변"""
+
+    def update(self, instance, validated_data):
+        self._check_editable(instance)
+
+        # 완료 처리
+        # instance.status = AnalysisStatusChoices.COMPLETED
+        return super().update(instance, validated_data)
+
+    def _check_editable(self, instance, raise_exception=True) -> bool:
+        """분석 후 선택지를 고를 수 있는 상태인지 확인"""
+
+        if instance.status == AnalysisStatusChoices.UPLOAD:
+            return True
+
+        if raise_exception:
+            raise ValidationError({"detail": "분석을 수정할 수 없습니다."})
+
+        return False
 
     class Meta:
         model = Analysis
