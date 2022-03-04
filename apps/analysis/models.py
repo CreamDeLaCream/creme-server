@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from apps.analysis.choices import EMOTION_CHOICES, STATUS_CHOICES, UNKNOWN
+from apps.analysis.choices import AnalysisStatusChoices, EmotionChoices
 from apps.core.helper import generate_nanoid, get_uuid_path
 from apps.core.models import TimeStampedMixin
 from apps.dogs.models import Dog
@@ -12,7 +12,10 @@ from apps.questions.models import QuestionChoice
 class DogEmotion(models.Model):
 
     emotion = models.CharField(
-        verbose_name=_("emotion"), max_length=10, choices=EMOTION_CHOICES
+        verbose_name=_("emotion"),
+        max_length=10,
+        choices=EmotionChoices.choices,
+        default=EmotionChoices.UNKNOWN,
     )
     description = models.TextField(verbose_name=_("description"))
 
@@ -20,13 +23,8 @@ class DogEmotion(models.Model):
         verbose_name = _("dog emotion")
         db_table = "dog_emotion"
 
-    @staticmethod
-    def choose_emotion(emotion: str) -> str:
-        emotion = emotion.lower()
-        for choice in EMOTION_CHOICES:
-            if choice[1] == emotion:
-                return choice[0]
-        return ""
+    def __str__(self) -> str:
+        return EmotionChoices.get_value_from_key(self.emotion)
 
 
 class Analysis(TimeStampedMixin):
@@ -74,7 +72,8 @@ class Analysis(TimeStampedMixin):
         blank=True,
         null=True,
         max_length=10,
-        choices=EMOTION_CHOICES,
+        choices=EmotionChoices.choices,
+        default=EmotionChoices.UNKNOWN,
     )
 
     human_emotion_percentage = models.DecimalField(
@@ -89,8 +88,8 @@ class Analysis(TimeStampedMixin):
     )
     status = models.CharField(
         verbose_name=_("analysis status"),
-        default=UNKNOWN,
-        choices=STATUS_CHOICES,
+        default=AnalysisStatusChoices.UNKNOWN,
+        choices=AnalysisStatusChoices.choices,
         max_length=20,
     )
     chemistry_percentage = models.DecimalField(
@@ -100,6 +99,9 @@ class Analysis(TimeStampedMixin):
     class Meta:
         verbose_name = _("analysis")
         db_table = "analysis"
+
+    def __str__(self) -> str:
+        return _("{dog_name} analysis").format(dog_name=self.dog_name)
 
 
 class DogAnalysisRecord(TimeStampedMixin):
@@ -112,3 +114,8 @@ class DogAnalysisRecord(TimeStampedMixin):
     class Meta:
         verbose_name = _("dog analysis record")
         db_table = "dog_analysis_record"
+
+    def __str__(self) -> str:
+        return _("{username} {dog_name} analysis record").format(
+            username=self.user.username, dog_name=self.analysis.dog_name
+        )
