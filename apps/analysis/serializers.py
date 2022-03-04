@@ -80,7 +80,7 @@ class AnalysisPetSerializer(serializers.ModelSerializer):
                 str(x) for x in coordinate["prob"][0] + coordinate["prob"][1]
             )
 
-            choice_emotion = EmotionChoices.get_key_from_value(dog_emotion["emotion"])
+            choice_emotion = EmotionChoices.get_emotion(dog_emotion["emotion"])
 
             emotion = DogEmotion.objects.get(emotion=choice_emotion)
 

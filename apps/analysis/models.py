@@ -24,7 +24,7 @@ class DogEmotion(models.Model):
         db_table = "dog_emotion"
 
     def __str__(self) -> str:
-        return EmotionChoices.get_value_from_key(self.emotion)
+        return EmotionChoices(self.emotion).label
 
 
 class Analysis(TimeStampedMixin):
