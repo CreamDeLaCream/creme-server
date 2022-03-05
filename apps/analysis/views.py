@@ -1,9 +1,13 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import parsers
-from rest_framework.generics import CreateAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView, UpdateAPIView
 
 from .models import Analysis
-from .serializers import AnalysisHumanSerializer, AnalysisPetSerializer
+from .serializers import (
+    AnalysisHumanSerializer,
+    AnalysisPetSerializer,
+    AnalysisResultSerializer,
+)
 
 
 class AnalysisPetView(CreateAPIView):
@@ -22,3 +26,13 @@ class AnalysisHumanView(UpdateAPIView):
         return get_object_or_404(Analysis, slug=slug)
 
     serializer_class = AnalysisHumanSerializer
+
+
+class AnalysisResultView(RetrieveAPIView):
+    """분석 결과"""
+
+    def get_object(self):
+        slug = self.request.query_params.get("slug", None)
+        return get_object_or_404(Analysis, slug=slug)
+
+    serializer_class = AnalysisResultSerializer

@@ -4,10 +4,12 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from apps.analysis.models import Analysis, DogEmotion
-from apps.questions.serializers import QuestionChoiceSerializer
 
 from .apps import AnalysisConfig
 from .choices import AnalysisStatusChoices, EmotionChoices
+
+# from apps.questions.serializers import QuestionChoiceSerializer
+
 
 """
 
@@ -127,8 +129,8 @@ class AnalysisHumanSerializer(serializers.ModelSerializer):
         fields = ("answer",)
 
 
-class AnalysisSerializer(serializers.ModelSerializer):
-    solution = QuestionChoiceSerializer(many=True)
+class AnalysisResultSerializer(serializers.ModelSerializer):
+    # solution = QuestionChoiceSerializer(many=True)
 
     class Meta:
         model = Analysis

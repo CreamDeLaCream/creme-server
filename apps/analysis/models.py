@@ -96,6 +96,12 @@ class Analysis(TimeStampedMixin):
         verbose_name=_("chemistry"), default=0.0, max_digits=3, decimal_places=2
     )
 
+    needs = models.ManyToManyField(
+        "questions.Need",
+        through="questions.AnalysisNeed",
+        through_fields=("analysis", "need"),
+    )
+
     class Meta:
         verbose_name = _("analysis")
         db_table = "analysis"
