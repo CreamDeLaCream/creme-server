@@ -38,4 +38,4 @@ class User(TimeStampedMixin, PermissionsMixin, AbstractBaseUser):
         db_table = "user"
 
     def __str__(self) -> str:
-        return self.email
+        return self.username

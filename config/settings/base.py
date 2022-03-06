@@ -4,7 +4,10 @@ environment variables:
     ALLOWED_HOSTS = https://aaa.com,https://bbb.com # 접속 허용할 hosts
 """
 
+import json
 import os
+import sys
+from datetime import timedelta
 from pathlib import Path
 
 from django.utils.translation import gettext_lazy as _
@@ -25,6 +28,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, ".static")
 # media directory
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, ".media")
+
+# secret key
+SECRET_BASE_FILE = os.path.join(BASE_DIR, "secrets.json")
+secrets = json.loads(open(SECRET_BASE_FILE).read())
+for key, value in secrets.items():
+    setattr(sys.modules[__name__], key, value)
+
 
 # 후행 슬래시 비활성화
 APPEND_SLASH = False
@@ -71,6 +81,9 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "silk",
     "drf_yasg",
+    "rest_framework.authtoken",
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
 ]
 
 # 프로젝트에서 생성한 앱
@@ -83,6 +96,25 @@ LOCAL_APPS = [
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
+
+REST_FRAMEWORK = {
+    # 인증 체계 설정
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+}
+
+# TOKEN
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=6),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=3),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "ALGORITHM": "HS512",
+    "SIGNING_KEY": SECRET_KEY,
+}
 
 
 # ------------------------------------------------
