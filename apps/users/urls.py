@@ -3,8 +3,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("kakao/", views.kakao_login),
-    path("kakao/callback/", views.kakao_callback),
+    path("kakao/callback", views.TokenAPIView.as_view()),
     path(
         "logout",
         views.TokenBlacklistView.as_view(),
