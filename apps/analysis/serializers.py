@@ -4,6 +4,8 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from apps.analysis.models import Analysis, DogEmotion
+from apps.dogs.serializers import DogSerializer
+from apps.questions.serializers import NeedSerializer, QuestionChoiceSerializer
 
 from .apps import AnalysisConfig
 from .choices import AnalysisStatusChoices, EmotionChoices
@@ -132,6 +134,28 @@ class AnalysisHumanSerializer(serializers.ModelSerializer):
 class AnalysisResultSerializer(serializers.ModelSerializer):
     # solution = QuestionChoiceSerializer(many=True)
 
+    dog_emotion = serializers.CharField(source="dog_emotion.emotion")
+    # solution
+    solution = QuestionChoiceSerializer(source="answer", many=True, read_only=True)
+
+    dog = DogSerializer(read_only=True)
+    needs = NeedSerializer(many=True, read_only=True)
+
     class Meta:
         model = Analysis
-        fields = "__all__"
+        fields = (
+            "created_at",
+            "dog_name",
+            "dog_age",
+            "slug",
+            "image",
+            "dog",
+            "dog_emotion",
+            "dog_emotion_percentage",
+            "human_emotion",
+            "human_emotion_percentage",
+            "status",
+            "chemistry_percentage",
+            "solution",
+            "needs",
+        )

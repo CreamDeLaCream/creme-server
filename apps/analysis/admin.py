@@ -11,6 +11,8 @@ class AnalysisAdmin(admin.ModelAdmin):
         "id",
         "dog_name",
     )
+    # manytomany field 추가 삭제
+    filter_horizontal = ("answer",)
 
 
 @admin.register(DogAnalysisRecord)
