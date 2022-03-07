@@ -3,6 +3,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path("", views.UserAPIView.as_view()),
     path("keyword", views.UserKeywordListAPIView.as_view()),
     path("kakao/callback", views.TokenAPIView.as_view()),
     path(
@@ -17,4 +18,5 @@ urlpatterns = [
         "token/verify",
         views.TokenVerifyView.as_view(),
     ),
+    path("<pk>", views.UserLifeStyleAPIView.as_view()),
 ]

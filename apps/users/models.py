@@ -40,9 +40,7 @@ class User(TimeStampedMixin, PermissionsMixin, AbstractBaseUser):
 
     email = models.EmailField(verbose_name=_("email"), max_length=80, unique=True)
     username = models.CharField(verbose_name=_("username"), max_length=30)
-    birth = models.DateField(
-        verbose_name=_("date of birth"),
-    )
+    birth = models.DateField(verbose_name=_("date of birth"), null=True)
     is_staff = models.BooleanField(verbose_name=_("is_staff"), default=False)
     is_active = models.BooleanField(verbose_name=_("is_active"), default=True)
     objects = UserManager()
