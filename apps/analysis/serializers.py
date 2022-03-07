@@ -134,7 +134,10 @@ class AnalysisHumanSerializer(serializers.ModelSerializer):
 class AnalysisResultSerializer(serializers.ModelSerializer):
     # solution = QuestionChoiceSerializer(many=True)
 
-    dog_emotion = serializers.CharField(source="dog_emotion.emotion")
+    human_emotion = serializers.CharField(source="get_human_emotion_display")
+    dog_emotion = serializers.CharField(source="dog_emotion.get_emotion_display")
+    status = serializers.CharField(source="get_status_display")
+
     # solution
     solution = QuestionChoiceSerializer(source="answer", many=True, read_only=True)
 
