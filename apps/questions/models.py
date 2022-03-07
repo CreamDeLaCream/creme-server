@@ -1,5 +1,3 @@
-from ast import keyword
-
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -55,7 +53,7 @@ class Need(models.Model):
 
 class AnalysisNeed(models.Model):
 
-    question = models.ForeignKey("questions.Need", on_delete=models.CASCADE)
+    need = models.ForeignKey("questions.Need", on_delete=models.CASCADE)
     analysis = models.ForeignKey("analysis.Analysis", on_delete=models.CASCADE)
 
     class Meta:
