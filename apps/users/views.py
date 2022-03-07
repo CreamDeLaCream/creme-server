@@ -1,5 +1,10 @@
 import requests
 from django.conf import settings
+from rest_framework.generics import (
+    ListAPIView,
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -9,7 +14,8 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-from .models import User
+from .models import User, UserKeyword
+from .serializers import UserKeywordSerializer, UserSerializer
 
 
 class TokenAPIView(APIView):
@@ -88,3 +94,34 @@ class TokenRefreshView(TokenRefreshView):
 class TokenVerifyView(TokenVerifyView):
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
+
+
+class UserKeywordListAPIView(ListAPIView):
+    """
+    User Keyword List class
+    """
+
+    queryset = UserKeyword.objects.all()
+    serializer_class = UserKeywordSerializer
+
+
+class UserAPIView(ListCreateAPIView):
+    """
+    User class
+    """
+
+    # permission_classes = [IsAuthenticated]
+
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserLifeStyleAPIView(RetrieveUpdateDestroyAPIView):
+    """
+    User Life style class
+    """
+
+    # permission_classes = [IsAuthenticated]
+
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
