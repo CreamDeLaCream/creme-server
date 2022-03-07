@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Question, QuestionChoice
+from .models import Need, Question, QuestionChoice
 
 
 class QuestionChoiceSerializer(serializers.ModelSerializer):
@@ -34,4 +34,14 @@ class ChoiceSolutionSerializer(serializers.ModelSerializer):
         fields = (
             "content",
             "solution",
+        )
+
+
+class NeedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Need
+        fields = (
+            "choice",
+            "name",
+            "description",
         )
