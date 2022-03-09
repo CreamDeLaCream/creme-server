@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -101,7 +100,8 @@ class Analysis(TimeStampedMixin):
         through="questions.AnalysisNeed",
         through_fields=("analysis", "need"),
     )
-    memo = models.TextField(verbose_name=_("memo"),blank=True)
+    memo = models.TextField(verbose_name=_("memo"), blank=True)
+    is_favorite = models.BooleanField(verbose_name=("is favorite"), default=False)
 
     class Meta:
         verbose_name = _("analysis")
