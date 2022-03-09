@@ -101,6 +101,7 @@ class Analysis(TimeStampedMixin):
         through="questions.AnalysisNeed",
         through_fields=("analysis", "need"),
     )
+    memo = models.TextField(verbose_name=_("memo"),blank=True)
 
     class Meta:
         verbose_name = _("analysis")
@@ -110,18 +111,18 @@ class Analysis(TimeStampedMixin):
         return _("{dog_name} analysis").format(dog_name=self.dog_name)
 
 
-class DogAnalysisRecord(TimeStampedMixin):
+# [Deprecated] Analysis 모델과 통합
+# class DogAnalysisRecord(TimeStampedMixin):
+#     # user FK (django.contrib.auth -> get_user_model() 을 사용하여 모델을 가져온다)
+#     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+#     analysis = models.ForeignKey(Analysis, on_delete=models.CASCADE)
+#     memo = models.TextField(verbose_name=_("memo"))
 
-    # user FK (django.contrib.auth -> get_user_model() 을 사용하여 모델을 가져온다)
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    analysis = models.ForeignKey(Analysis, on_delete=models.CASCADE)
-    memo = models.TextField(verbose_name=_("memo"))
+#     class Meta:
+#         verbose_name = _("dog analysis record")
+#         db_table = "dog_analysis_record"
 
-    class Meta:
-        verbose_name = _("dog analysis record")
-        db_table = "dog_analysis_record"
-
-    def __str__(self) -> str:
-        return _("{username} {dog_name} analysis record").format(
-            username=self.user.username, dog_name=self.analysis.dog_name
-        )
+#     def __str__(self) -> str:
+#         return _("{username} {dog_name} analysis record").format(
+#             username=self.user.username, dog_name=self.analysis.dog_name
+#         )

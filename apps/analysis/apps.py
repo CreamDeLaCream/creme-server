@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 from creme_ai.dogemotion.dog_model import DogModel
-from creme_ai.humanemotion.human_model import RMN
+# from creme_ai.humanemotion.human_model import RMN
 
 
 class AnalysisConfig(AppConfig):

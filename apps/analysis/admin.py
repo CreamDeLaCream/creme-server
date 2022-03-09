@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 
-from .models import Analysis, DogAnalysisRecord, DogEmotion
+from .models import Analysis, DogEmotion
 
 
 @admin.register(Analysis)
@@ -14,13 +14,13 @@ class AnalysisAdmin(admin.ModelAdmin):
     # manytomany field 추가 삭제
     filter_horizontal = ("answer",)
 
-
-@admin.register(DogAnalysisRecord)
-class DogAnalysisRecordAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "user",
-    )
+# [Deprecated]
+# @admin.register(DogAnalysisRecord)
+# class DogAnalysisRecordAdmin(admin.ModelAdmin):
+#     list_display = (
+#         "id",
+#         "user",
+#     )
 
 
 @admin.register(DogEmotion)
