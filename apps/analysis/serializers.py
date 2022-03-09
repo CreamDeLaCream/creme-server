@@ -137,7 +137,7 @@ class AnalysisResultSerializer(serializers.ModelSerializer):
     status = serializers.CharField(source="get_status_display")
 
     # solution
-    solution = QuestionChoiceSerializer(source="answer", many=True, read_only=True)
+    answers = QuestionChoiceSerializer(source="answer", many=True, read_only=True)
 
     dog = DogSerializer(read_only=True)
     needs = NeedSerializer(many=True, read_only=True)
@@ -171,6 +171,6 @@ class AnalysisResultSerializer(serializers.ModelSerializer):
             "is_dog_emotion_negative",
             "is_human_emotion_negative",
             "is_chemistry_negative",
-            "solution",
+            "answers",
             "needs",
         )
