@@ -162,3 +162,19 @@ class AnalysisResultSerializer(serializers.ModelSerializer):
             "solution",
             "needs",
         )
+
+
+class DogAnalysisRecordSerializer(serializers.ModelSerializer):
+
+    dog_emotion = serializers.CharField(source="dog_emotion.get_emotion_display")
+
+    class Meta:
+        model = Analysis
+        fields = (
+            "created_at",
+            "dog_name",
+            "slug",
+            "image",
+            "dog_emotion",
+            "is_favorite",
+        )

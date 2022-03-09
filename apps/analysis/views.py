@@ -1,12 +1,18 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import parsers
-from rest_framework.generics import CreateAPIView, RetrieveAPIView, UpdateAPIView
+from rest_framework.generics import (
+    CreateAPIView,
+    ListAPIView,
+    RetrieveAPIView,
+    UpdateAPIView,
+)
 
 from .models import Analysis
 from .serializers import (
     AnalysisHumanSerializer,
     AnalysisPetSerializer,
     AnalysisResultSerializer,
+    DogAnalysisRecordSerializer,
 )
 
 
@@ -36,3 +42,17 @@ class AnalysisResultView(RetrieveAPIView):
         return get_object_or_404(Analysis, slug=slug)
 
     serializer_class = AnalysisResultSerializer
+
+
+class DogAnalysisRecordListAPIView(ListAPIView):
+    """
+    Dog Analysis Record List class
+
+    사용자 access token 보내주면 해당 사용자 모든 강아지 감정분석 자료 최신순
+    """
+
+    serializer_class = DogAnalysisRecordSerializer
+
+    def get_queryset(self):
+        user = self.request.user.id
+        return Analysis.objects.filter(user_id=user).order_by("-created_at")
