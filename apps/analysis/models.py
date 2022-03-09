@@ -96,7 +96,7 @@ class Analysis(TimeStampedMixin):
         max_length=20,
     )
     chemistry_percentage = models.DecimalField(
-        verbose_name=_("chemistry"), default=0.0, max_digits=3, decimal_places=2
+        verbose_name=_("chemistry"), default=0.0, max_digits=5, decimal_places=2
     )
 
     needs = models.ManyToManyField(
@@ -106,6 +106,23 @@ class Analysis(TimeStampedMixin):
     )
     memo = models.TextField(verbose_name=_("memo"), blank=True)
     is_favorite = models.BooleanField(verbose_name=("is favorite"), default=False)
+
+    @property
+    def is_dog_emotion_negative(self) -> bool:
+        return self.dog_emotion.emotion != EmotionChoices.HAPPY
+
+    @property
+    def is_human_emotion_negative(self) -> bool:
+        return self.human_emotion != EmotionChoices.HAPPY
+
+    @property
+    def is_chemistry_negative(self) -> bool:
+        sub = self.human_emotion_percentage - self.dog_emotion_percentage
+        return (
+            sub < 0
+            if self.is_dog_emotion_negative == self.is_human_emotion_negative
+            else sub > 0
+        )
 
     class Meta:
         verbose_name = _("analysis")

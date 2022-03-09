@@ -142,6 +142,17 @@ class AnalysisResultSerializer(serializers.ModelSerializer):
     dog = DogSerializer(read_only=True)
     needs = NeedSerializer(many=True, read_only=True)
 
+    def to_representation(self, instance):
+        res = super().to_representation(instance)
+        username = instance.user.username if instance.user else "반려인"
+        dog_name = instance.dog_name
+
+        description = instance.dog_emotion.description.format(
+            username=username, dog_name=dog_name
+        )
+        res.update({"dog_emotion_description": description})
+        return res
+
     class Meta:
         model = Analysis
         fields = (
@@ -157,6 +168,9 @@ class AnalysisResultSerializer(serializers.ModelSerializer):
             "human_emotion_percentage",
             "status",
             "chemistry_percentage",
+            "is_dog_emotion_negative",
+            "is_human_emotion_negative",
+            "is_chemistry_negative",
             "solution",
             "needs",
         )
