@@ -65,9 +65,7 @@ class AnalysisPetSerializer(serializers.ModelSerializer):
         if dog is not None:
             validated_data["dog_age"] = dog.age
             validated_data["dog_name"] = dog.name
-
         analysis = Analysis.objects.create(**validated_data)
-
         try:
 
             # 첫번째 index - > 가장 높은 퍼센트 감정

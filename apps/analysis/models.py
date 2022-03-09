@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -42,6 +43,9 @@ class Analysis(TimeStampedMixin):
         Dog, verbose_name=_("dog"), blank=True, null=True, on_delete=models.CASCADE
     )
 
+    user = models.ForeignKey(
+        get_user_model(), null=True, blank=True, on_delete=models.CASCADE
+    )
     answer = models.ManyToManyField(
         QuestionChoice,
         verbose_name=_("question choice"),
