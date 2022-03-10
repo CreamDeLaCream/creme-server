@@ -9,6 +9,7 @@ class QuestionChoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestionChoice
         fields = (
+            "id",
             "sort_order",
             "content",
         )

@@ -8,6 +8,7 @@ from .views import (
     DogAnalysisRecordAPIView,
     DogAnalysisRecordEmotionAPIView,
     DogAnalysisRecordEmotionListAPIView,
+    AnaylsisFavoriteView,
 )
 
 urlpatterns = [
@@ -20,4 +21,5 @@ urlpatterns = [
     path(
         "history/emotion/<dogid>/<emotion>", DogAnalysisRecordEmotionAPIView.as_view()
     ),
+    path("favorite", AnaylsisFavoriteView.as_view()),
 ]

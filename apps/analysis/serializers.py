@@ -65,9 +65,7 @@ class AnalysisPetSerializer(serializers.ModelSerializer):
         if dog is not None:
             validated_data["dog_age"] = dog.age
             validated_data["dog_name"] = dog.name
-
         analysis = Analysis.objects.create(**validated_data)
-
         try:
 
             # 첫번째 index - > 가장 높은 퍼센트 감정
@@ -139,10 +137,21 @@ class AnalysisResultSerializer(serializers.ModelSerializer):
     status = serializers.CharField(source="get_status_display")
 
     # solution
-    solution = QuestionChoiceSerializer(source="answer", many=True, read_only=True)
+    answers = QuestionChoiceSerializer(source="answer", many=True, read_only=True)
 
     dog = DogSerializer(read_only=True)
     needs = NeedSerializer(many=True, read_only=True)
+
+    def to_representation(self, instance):
+        res = super().to_representation(instance)
+        username = instance.user.username if instance.user else "반려인"
+        dog_name = instance.dog_name
+
+        description = instance.dog_emotion.description.format(
+            username=username, dog_name=dog_name
+        )
+        res.update({"dog_emotion_description": description})
+        return res
 
     class Meta:
         model = Analysis
@@ -159,7 +168,10 @@ class AnalysisResultSerializer(serializers.ModelSerializer):
             "human_emotion_percentage",
             "status",
             "chemistry_percentage",
-            "solution",
+            "is_dog_emotion_negative",
+            "is_human_emotion_negative",
+            "is_chemistry_negative",
+            "answers",
             "needs",
         )
 
