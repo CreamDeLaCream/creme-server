@@ -174,3 +174,39 @@ class AnalysisResultSerializer(serializers.ModelSerializer):
             "answers",
             "needs",
         )
+
+
+class DogAnalysisRecordListSerializer(serializers.ModelSerializer):
+
+    dog_emotion = serializers.CharField(source="dog_emotion.get_emotion_display")
+
+    class Meta:
+        model = Analysis
+        fields = (
+            "created_at",
+            "dog_name",
+            "slug",
+            "image",
+            "dog_emotion",
+            "is_favorite",
+        )
+
+
+class DogAnalysisRecordSerializer(serializers.ModelSerializer):
+
+    dog_emotion = serializers.CharField(source="dog_emotion.get_emotion_display")
+    status = serializers.CharField(source="get_status_display")
+
+    dog = DogSerializer(read_only=True)
+
+    class Meta:
+        model = Analysis
+        fields = (
+            "created_at",
+            "dog_name",
+            "slug",
+            "image",
+            "dog",
+            "dog_emotion",
+            "status",
+        )
