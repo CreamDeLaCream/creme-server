@@ -1,10 +1,6 @@
 import requests
 from django.conf import settings
-from rest_framework.generics import (
-    ListAPIView,
-    ListCreateAPIView,
-    RetrieveUpdateDestroyAPIView,
-)
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -52,33 +48,44 @@ class TokenAPIView(APIView):
         email = kakao_account["email"]
         username = kakao_account["profile"]["nickname"]
 
+        """
+        Signup or Signin Request
+        """
+
         try:
             user = User.objects.get(email=email)
+            # 이미 kakao로 가입된 유저라면
             User.objects.filter(email=email).update(email=email, username=username)
 
-            def get_tokens_for_user(user):
-                refresh = RefreshToken.for_user(user)
-                return {
-                    "refresh": str(refresh),
-                    "access": str(refresh.access_token),
-                }
-
-            tokens = get_tokens_for_user(user)
-            return Response(tokens)
-
         except User.DoesNotExist:
-            user = User.objects.create(email=email, username=username)
+            # 기존에 가입된 유저가 없으면 새로 가입
+            user = User.objects.filter(email=email).create(
+                email=email, username=username
+            )
 
-            def get_tokens_for_user(user):
-                refresh = RefreshToken.for_user(user)
-                return {
-                    "refresh": str(refresh),
-                    "access": str(refresh.access_token),
-                }
+        def get_tokens_for_user(user):
+            refresh = RefreshToken.for_user(user)
 
-            tokens = get_tokens_for_user(user)
+            return {
+                "refresh": str(refresh),
+                "access": str(refresh.access_token),
+            }
 
-            return Response(tokens)
+        tokens = get_tokens_for_user(user)
+
+        response = Response(tokens, status=200)
+        response.set_cookie(
+            "access",
+            value=tokens["access"],
+            max_age=None,
+            expires=None,
+            path="/",
+            domain=None,
+            secure=False,
+            httponly=False,
+            samesite=None,
+        )
+        return response
 
 
 class TokenBlacklistView(TokenBlacklistView):
@@ -105,15 +112,21 @@ class UserKeywordListAPIView(ListAPIView):
     serializer_class = UserKeywordSerializer
 
 
-class UserAPIView(ListCreateAPIView):
+class UserAPIView(APIView):
     """
     User class
     """
 
     # permission_classes = [IsAuthenticated]
-
-    queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def get(self, request, *args, **kwargs):
+        access = request.COOKIES["access"]  # noqa : F841
+        queryset = User.objects.get(email=request.user)
+        username = queryset.username
+        id = queryset.id
+        user = {"username": username, "id": id}
+        return Response(user)
 
 
 class UserLifeStyleAPIView(RetrieveUpdateDestroyAPIView):
