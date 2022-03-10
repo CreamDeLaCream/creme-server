@@ -1,10 +1,6 @@
 import requests
 from django.conf import settings
-from rest_framework.generics import (
-    ListAPIView,
-    ListCreateAPIView,
-    RetrieveUpdateDestroyAPIView,
-)
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -105,15 +101,21 @@ class UserKeywordListAPIView(ListAPIView):
     serializer_class = UserKeywordSerializer
 
 
-class UserAPIView(ListCreateAPIView):
+class UserAPIView(APIView):
     """
     User class
     """
 
     # permission_classes = [IsAuthenticated]
-
-    queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def get(self, request, *args, **kwargs):
+        access = request.COOKIES["access"]  # noqa : F841
+        queryset = User.objects.get(email=request.user)
+        username = queryset.username
+        id = queryset.id
+        user = {"username": username, "id": id}
+        return Response(user)
 
 
 class UserLifeStyleAPIView(RetrieveUpdateDestroyAPIView):
