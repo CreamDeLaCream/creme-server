@@ -6,12 +6,25 @@ from .models import Need, Question, QuestionChoice
 class QuestionChoiceSerializer(serializers.ModelSerializer):
     """질문 선택지"""
 
+    def to_representation(self, instance):
+        res = super().to_representation(instance)
+        user = self.context.get("user")
+        dog_name = self.context.get("dog_name")
+
+        username = user.username if user else "반려인"
+        dog_name = dog_name
+
+        description = instance.solution.format(username=username, dog_name=dog_name)
+        res.update({"solution": description})
+        return res
+
     class Meta:
         model = QuestionChoice
         fields = (
             "id",
             "sort_order",
             "content",
+            "solution",
         )
 
 

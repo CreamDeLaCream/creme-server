@@ -65,6 +65,7 @@ class AnalysisPetSerializer(serializers.ModelSerializer):
         if dog is not None:
             validated_data["dog_age"] = dog.age
             validated_data["dog_name"] = dog.name
+
         analysis = Analysis.objects.create(**validated_data)
         try:
 
@@ -130,17 +131,23 @@ class AnalysisHumanSerializer(serializers.ModelSerializer):
 
 
 class AnalysisResultSerializer(serializers.ModelSerializer):
-    # solution = QuestionChoiceSerializer(many=True)
 
     human_emotion = serializers.CharField(source="get_human_emotion_display")
     dog_emotion = serializers.CharField(source="dog_emotion.get_emotion_display")
     status = serializers.CharField(source="get_status_display")
 
     # solution
-    answers = QuestionChoiceSerializer(source="answer", many=True, read_only=True)
+    # answers = QuestionChoiceSerializer(source="answer", many=True, read_only=True)
+    solution = serializers.SerializerMethodField("get_solution_serializer")
 
     dog = DogSerializer(read_only=True)
     needs = NeedSerializer(many=True, read_only=True)
+
+    def get_solution_serializer(self, obj):
+        serializer = QuestionChoiceSerializer(
+            obj.answer, many=True, context={"user": obj.user, "dog_name": obj.dog_name}
+        )
+        return serializer.data
 
     def to_representation(self, instance):
         res = super().to_representation(instance)
@@ -173,7 +180,8 @@ class AnalysisResultSerializer(serializers.ModelSerializer):
             "is_dog_emotion_negative",
             "is_human_emotion_negative",
             "is_chemistry_negative",
-            "answers",
+            "solution",
+            # "answers",
             "needs",
         )
 
@@ -196,7 +204,7 @@ class AnalysisCompletedSerializer(serializers.ModelSerializer):
     status = serializers.CharField(source="get_status_display")
 
     # solution
-    answers = QuestionChoiceSerializer(source="answer", many=True, read_only=True)
+    solution = QuestionChoiceSerializer(source="answer", many=True, read_only=True)
 
     dog = DogSerializer(read_only=True)
     needs = NeedSerializer(many=True, read_only=True)
@@ -230,7 +238,7 @@ class AnalysisCompletedSerializer(serializers.ModelSerializer):
             "is_dog_emotion_negative",
             "is_human_emotion_negative",
             "is_chemistry_negative",
-            "answers",
+            "solution",
             "needs",
             "memo",
             "is_favorite",
