@@ -121,7 +121,6 @@ class UserAPIView(APIView):
     serializer_class = UserSerializer
 
     def get(self, request, *args, **kwargs):
-        access = request.COOKIES["access"]  # noqa : F841
         queryset = User.objects.get(email=request.user)
         username = queryset.username
         id = queryset.id
