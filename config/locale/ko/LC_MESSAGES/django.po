@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-18 20:54+0900\n"
+"POT-Creation-Date: 2022-03-04 22:36+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,120 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+#: apps/analysis/choices.py:26 apps/analysis/choices.py:34
+msgid "unknown"
+msgstr "알 수 없음"
+
+#: apps/analysis/choices.py:27
+msgid "angry"
+msgstr "화남"
+
+#: apps/analysis/choices.py:28
+msgid "scared"
+msgstr "두려움"
+
+#: apps/analysis/choices.py:29
+msgid "happy"
+msgstr "행복"
+
+#: apps/analysis/choices.py:30
+msgid "sad"
+msgstr "슬픔"
+
+#: apps/analysis/choices.py:35
+msgid "uploaded"
+msgstr "업로드"
+
+#: apps/analysis/choices.py:36
+msgid "completed"
+msgstr "완료 여부"
+
+#: apps/analysis/models.py:15
+msgid "emotion"
+msgstr "감정"
+
+#: apps/analysis/models.py:20 apps/questions/models.py:49
+msgid "description"
+msgstr "감정 설명"
+
+#: apps/analysis/models.py:23 apps/analysis/models.py:56
+msgid "dog emotion"
+msgstr "강아지 감정"
+
+#: apps/analysis/models.py:32 apps/dogs/models.py:24
+msgid "dog name"
+msgstr "강아지 이름"
+
+#: apps/analysis/models.py:33
+msgid "dog age"
+msgstr "강아지 나이"
+
+#: apps/analysis/models.py:36
+msgid "analysis slug"
+msgstr "분석 Slug"
+
+#: apps/analysis/models.py:43 apps/dogs/models.py:44 apps/dogs/models.py:52
+msgid "dog"
+msgstr "강아지"
+
+#: apps/analysis/models.py:48 apps/questions/models.py:35
+msgid "question choice"
+msgstr "질문 선택지"
+
+#: apps/analysis/models.py:53
+msgid "analysis image"
+msgstr "분석 이미지"
+
+#: apps/analysis/models.py:60
+msgid "dog emotion percentage"
+msgstr "강아지 감정 인식 퍼센트"
+
+#: apps/analysis/models.py:67
+msgid "dog coordinate"
+msgstr "강아지 감정 인식 좌표"
+
+#: apps/analysis/models.py:71
+msgid "human emotion"
+msgstr "사람 감정"
+
+#: apps/analysis/models.py:80
+msgid "human emotion percentage"
+msgstr "사람 감정 퍼센트"
+
+#: apps/analysis/models.py:87
+msgid "human coordinate"
+msgstr "사람 감정 인식 좌표"
+
+#: apps/analysis/models.py:90
+msgid "analysis status"
+msgstr "분석 진행 상태"
+
+#: apps/analysis/models.py:96
+msgid "chemistry"
+msgstr "궁합"
+
+#: apps/analysis/models.py:100
+msgid "analysis"
+msgstr "분석"
+
+#: apps/analysis/models.py:104
+#, python-brace-format
+msgid "{dog_name} analysis"
+msgstr "{dog_name} 분석"
+
+#: apps/analysis/models.py:112
+msgid "memo"
+msgstr "메모"
+
+#: apps/analysis/models.py:115
+msgid "dog analysis record"
+msgstr "강아지 감정 기록"
+
+#: apps/analysis/models.py:119
+#, python-brace-format
+msgid "{username} {dog_name} analysis record"
+msgstr "{username} {dog_name} 감정 기록"
+
 #: apps/core/models.py:12
 msgid "created at"
 msgstr "생성한 날짜"
@@ -26,6 +140,79 @@ msgstr "생성한 날짜"
 msgid "updated at"
 msgstr "수정한 날짜"
 
-#: config/settings/base.py:139
+#: apps/dogs/models.py:12
+msgid "dog character keyword"
+msgstr "강아지 성격 키워드"
+
+#: apps/dogs/models.py:15 apps/dogs/models.py:59
+msgid "dog keyword"
+msgstr "강아지 키워드"
+
+#: apps/dogs/models.py:25
+msgid "date of birth"
+msgstr "생년월일"
+
+#: apps/dogs/models.py:26
+msgid "dog image"
+msgstr "강아지 사진"
+
+#: apps/dogs/models.py:63
+msgid "dog character"
+msgstr "강아지 성격"
+
+#: apps/questions/models.py:9 apps/questions/models.py:12
+#: apps/questions/models.py:22
+msgid "question"
+msgstr "질문"
+
+#: apps/questions/models.py:26
+msgid "question choice order"
+msgstr "질문 선택지 순서"
+
+#: apps/questions/models.py:27
+msgid "question choice content"
+msgstr "질문 선택지 내용"
+
+#: apps/questions/models.py:28
+msgid "question choice solution"
+msgstr "질문 선택지 솔루션"
+
+#: apps/questions/models.py:31
+msgid "rate of increase"
+msgstr "증가율"
+
+#: apps/questions/models.py:48
+msgid "keyword"
+msgstr "키워드"
+
+#: apps/questions/models.py:52
+msgid "necessary"
+msgstr "필요한것"
+
+#: apps/questions/models.py:62
+msgid "analysis need"
+msgstr "분석 필요한것"
+
+#: apps/users/models.py:27
+msgid "email"
+msgstr "이메일"
+
+#: apps/users/models.py:28
+msgid "username"
+msgstr "사용자 이름"
+
+#: apps/users/models.py:29
+msgid "is_staff"
+msgstr "관리자 여부"
+
+#: apps/users/models.py:30
+msgid "is_active"
+msgstr "활성화 여부"
+
+#: apps/users/models.py:37
+msgid "user"
+msgstr "사용자"
+
+#: config/settings/base.py:152
 msgid "Korean"
 msgstr "한국어"
