@@ -1,11 +1,10 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import parsers
+from rest_framework import parsers, status
 from rest_framework.generics import (
     CreateAPIView,
+    GenericAPIView,
     ListAPIView,
     RetrieveAPIView,
-    UpdateAPIView,
-    GenericAPIView,
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -14,11 +13,13 @@ from apps.questions.models import Need, QuestionChoice
 
 from .models import Analysis
 from .serializers import (
+    AnalysisCompletedSerializer,
     AnalysisHumanSerializer,
     AnalysisPetSerializer,
     AnalysisResultSerializer,
     DogAnalysisRecordListSerializer,
     DogAnalysisRecordSerializer,
+    DogAnaylsisSaveSerializer,
 )
 
 
@@ -82,8 +83,55 @@ class AnalysisHumanView(GenericAPIView):
         return Response(data=serializer.data)
 
 
-class AnaylsisFavoriteView(GenericAPIView):
+class AnalysisResultView(RetrieveAPIView):
+    """분석 결과"""
+
+    def get_object(self):
+        slug = self.request.query_params.get("slug", None)
+        return get_object_or_404(Analysis, slug=slug)
+
+    serializer_class = AnalysisResultSerializer
+
+
+class AnaylsisSaveView(GenericAPIView):
+
     permission_classes = [IsAuthenticated]
+    serializer_class = DogAnaylsisSaveSerializer
+
+    def get(self, request, *args, **kwargs):
+        """
+        분석 완료된 결과 (메모, 즐겨찾기까지) 조회
+        """
+        slug = self.request.query_params.get("slug", None)
+        project = get_object_or_404(Analysis, slug=slug)
+        serializer = AnalysisCompletedSerializer(project)
+
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        """
+        분석 결과에 메모, 즐겨찾기 추가
+        """
+
+        slug = request.data.get("slug")
+        favorite = request.data.get("favorite", False)
+        memo = request.data.get("memo", False)
+        analysis = Analysis.objects.get(slug=slug)
+
+        if analysis.user == request.user:
+            analysis.is_favorite = favorite
+            analysis.memo = memo
+            analysis.save()
+            return Response({"detail": "메모 저장 완료"}, status=status.HTTP_201_CREATED)
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+
+class AnaylsisFavoriteView(GenericAPIView):
+    """좋아요 수정"""
+
+    # permission_classes = [IsAuthenticated]
+    serializer_class = DogAnaylsisSaveSerializer
 
     def post(self, request, *args, **kwargs):
 
@@ -94,18 +142,9 @@ class AnaylsisFavoriteView(GenericAPIView):
         if analysis.user == request.user:
             analysis.is_favorite = favorite
             analysis.save()
-
-        return Response(data=analysis.is_favorite)
-
-
-class AnalysisResultView(RetrieveAPIView):
-    """분석 결과"""
-
-    def get_object(self):
-        slug = self.request.query_params.get("slug", None)
-        return get_object_or_404(Analysis, slug=slug)
-
-    serializer_class = AnalysisResultSerializer
+            return Response({"detail": "좋아요 수정 완료"}, status=status.HTTP_201_CREATED)
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
 
 
 class AllDogAnalysisRecordListAPIView(ListAPIView):
