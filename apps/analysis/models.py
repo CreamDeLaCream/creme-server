@@ -7,7 +7,6 @@ from apps.core.helper import generate_nanoid, get_uuid_path
 from apps.core.models import TimeStampedMixin
 from apps.dogs.models import Dog
 from apps.questions.models import QuestionChoice
-from apps.users.models import User
 
 
 class DogEmotion(models.Model):
@@ -46,7 +45,8 @@ class Analysis(TimeStampedMixin):
 
     user = models.ForeignKey(
         get_user_model(), null=True, blank=True, on_delete=models.CASCADE
-        answer = models.ManyToManyField(
+    )
+    answer = models.ManyToManyField(
         QuestionChoice,
         verbose_name=_("question choice"),
         related_name="analysis",
