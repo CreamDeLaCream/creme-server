@@ -7,11 +7,15 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
-urlpatterns = [
+app_urls = [
     path("analysis/", include("apps.analysis.urls")),
     path("questions/", include("apps.questions.urls")),
     path("dogs/", include("apps.dogs.urls")),
     path("users/", include("apps.users.urls")),
+]
+
+urlpatterns = [
+    path("api/", include(app_urls)),
 ]
 
 if settings.DEBUG:
