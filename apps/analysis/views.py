@@ -9,6 +9,7 @@ from rest_framework.generics import (
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from apps.analysis.choices import EmotionChoices
 from apps.questions.models import Need, QuestionChoice
 
 from .models import Analysis
@@ -49,20 +50,30 @@ class AnalysisHumanView(GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         slug = request.data.get("slug")
-        answers = request.data.get("answers")
-        analysis = Analysis.objects.get(slug=slug)
+        answers = request.data.get("answer")
+        analysis: Analysis = Analysis.objects.get(slug=slug)
 
         choices = []
         needs = []
         chemistry = 0
 
+        dog_emotion_mapping = [
+            EmotionChoices.HAPPY,
+            EmotionChoices.SAD,
+            EmotionChoices.SCARED,
+            EmotionChoices.ANGRY,
+        ]
         # 첫번째 질문 처리
+        if len(answers) > 0 and answers[0]["choice_id"] - 1 < len(dog_emotion_mapping):
+            choice_dog_emotion = dog_emotion_mapping[answers[0]["choice_id"] - 1]
+        else:
+            choice_dog_emotion = EmotionChoices.UNKNOWN
 
         # 2번부터
         question_seq = 2
 
-        for item in answers:
-            choice_id = item["choice_id"]
+        for i in range(1, len(answers)):
+            choice_id = answers[i]["choice_id"]
 
             try:
                 question_choice = QuestionChoice.objects.get(
@@ -88,6 +99,13 @@ class AnalysisHumanView(GenericAPIView):
             chemistry += abs(sub)
 
         chemistry += sum(choice.increase_percentage for choice in choices)
+
+        if choice_dog_emotion == analysis.dog_emotion.emotion:
+            # 감정일치
+            chemistry += 2.5
+            # TODO: 솔루션 매칭 시켜줘야함
+        else:
+            pass
 
         analysis.chemistry_percentage = chemistry
         analysis.answer.set(choices)
