@@ -231,6 +231,67 @@ class AnalysisCompletedSerializer(serializers.ModelSerializer):
             "dog",
             "dog_emotion",
             "dog_emotion_percentage",
+            "dog_coordinate",
+            "human_emotion",
+            "human_emotion_percentage",
+            "human_coordinate",
+            "status",
+            "chemistry_percentage",
+            "is_dog_emotion_negative",
+            "is_human_emotion_negative",
+            "is_chemistry_negative",
+            "solution",
+            "needs",
+            "memo",
+            "is_favorite",
+        )
+
+
+class DogAnaylsisSaveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Analysis
+        fields = (
+            "slug",
+            "is_favorite",
+            "memo",
+        )
+
+
+class AnalysisCompletedSerializer(serializers.ModelSerializer):
+    # solution = QuestionChoiceSerializer(many=True)
+
+    human_emotion = serializers.CharField(source="get_human_emotion_display")
+    dog_emotion = serializers.CharField(source="dog_emotion.get_emotion_display")
+    status = serializers.CharField(source="get_status_display")
+
+    # solution
+    answers = QuestionChoiceSerializer(source="answer", many=True, read_only=True)
+
+    dog = DogSerializer(read_only=True)
+    needs = NeedSerializer(many=True, read_only=True)
+
+    def to_representation(self, instance):
+        res = super().to_representation(instance)
+        username = instance.user.username if instance.user else "반려인"
+        dog_name = instance.dog_name
+
+        description = instance.dog_emotion.description.format(
+            username=username, dog_name=dog_name
+        )
+        res.update({"dog_emotion_description": description})
+        return res
+
+    class Meta:
+        model = Analysis
+        fields = (
+            "created_at",
+            "dog_name",
+            "dog_age",
+            "slug",
+            "image",
+            "dog",
+            "dog_emotion",
+            "dog_emotion_percentage",
             "human_emotion",
             "human_emotion_percentage",
             "status",
@@ -238,7 +299,7 @@ class AnalysisCompletedSerializer(serializers.ModelSerializer):
             "is_dog_emotion_negative",
             "is_human_emotion_negative",
             "is_chemistry_negative",
-            "solution",
+            "answers",
             "needs",
             "memo",
             "is_favorite",

@@ -5,7 +5,8 @@ from django.utils.translation import gettext_lazy as _
 from apps.analysis.choices import AnalysisStatusChoices, EmotionChoices
 from apps.core.helper import generate_nanoid, get_uuid_path
 from apps.core.models import TimeStampedMixin
-from apps.dogs.models import Dog
+
+# from apps.dogs.models import Dog
 from apps.questions.models import QuestionChoice
 
 
@@ -40,7 +41,12 @@ class Analysis(TimeStampedMixin):
     )
 
     dog = models.ForeignKey(
-        Dog, verbose_name=_("dog"), blank=True, null=True, on_delete=models.CASCADE
+        "dogs.Dog",
+        verbose_name=_("dog"),
+        related_name="analysis_dog_id",
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
     )
 
     user = models.ForeignKey(
