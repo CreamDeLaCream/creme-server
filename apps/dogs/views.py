@@ -1,6 +1,4 @@
-from typing import List
-
-from django.db.models import QuerySet
+from rest_framework import parsers
 from rest_framework.generics import (
     ListAPIView,
     ListCreateAPIView,
@@ -19,6 +17,7 @@ class DogListAPIView(ListCreateAPIView):
     """
 
     permission_classes = [IsAuthenticated]
+    parser_classes = (parsers.MultiPartParser,)
 
     def get(self, request):
         queryset = Dog.objects.filter(user=request.user.id)
@@ -26,36 +25,17 @@ class DogListAPIView(ListCreateAPIView):
         return Response(serializer.data)
 
     def post(self, request):
-        user = request.user.id
-        serializer = DogSerializer(data=request.data)
+        data = request.data.copy()
+        data["user"] = request.user.id
+        serializer = DogSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        dog = serializer.save()
 
-        if serializer.is_valid():
-            validated_data = serializer.validated_data
-
-            dog = Dog()
-            dog.user_id = user
-            dog.name = validated_data["name"]
-            dog.birth = validated_data["birth"]
-            dog.image = validated_data["image"]
-
-            def _make_keywords_from_list(self, keyword_list: List[str]) -> QuerySet:
-
-                qs = DogKeyword.objects.filter(name__in=keyword_list)
-                return qs
-
-            def validate_dog_keyword(self, value):
-                keywords = self._make_keywords_from_list(value)
-                return keywords
-
-            def create(self, validated_data):
-                keywords = validated_data.pop("dog_keyword")
-
-                dog.dog_keyword.set(keywords)
-
-            dog.save()
-            return Response({"detail": "success create dog"})
-
-        return Response(serializer.errors)
+        dog_keyword = request.data.get("dog_keyword")
+        keyword_list = dog_keyword.split(",")
+        keywords = DogKeyword.objects.filter(name__in=keyword_list)
+        dog.dog_keyword.set(keywords)
+        return Response(serializer.data)
 
 
 class DogAPIView(RetrieveUpdateDestroyAPIView):

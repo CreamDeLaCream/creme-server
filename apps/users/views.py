@@ -24,7 +24,7 @@ class TokenAPIView(APIView):
 
         code = request.GET.get("code")
         client_id = getattr(settings, "KAKAO_REST_API_KEY")
-        redirect_uri = "http://localhost:3000/users/kakao/callback"
+        redirect_uri = "http://elice-kdt-ai-3rd-team14.koreacentral.cloudapp.azure.com/api/users/kakao/callback"  # noqa =  E501
         kakao_oauthurl = f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={redirect_uri}&code={code}"  # noqa = E501
 
         # 인증코드를 토큰서버로 보내야함
