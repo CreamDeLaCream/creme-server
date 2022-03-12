@@ -1,5 +1,7 @@
 import json
+import time
 
+import cv2
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
@@ -9,6 +11,8 @@ from apps.questions.serializers import NeedSerializer, QuestionChoiceSerializer
 
 from .apps import AnalysisConfig
 from .choices import AnalysisStatusChoices, EmotionChoices
+
+start = time.time()
 
 # from apps.questions.serializers import QuestionChoiceSerializer
 
@@ -91,6 +95,12 @@ class AnalysisPetSerializer(serializers.ModelSerializer):
             analysis.status = AnalysisStatusChoices.UPLOAD
             analysis.save()
 
+            img = cv2.imread(analysis.image.path)
+            human_analysis = (
+                AnalysisConfig.human_ai_model.detect_emotion_for_single_frame(img)
+            )
+            print(human_analysis)
+
         except Exception as e:
             # logger.exception(e)
             # logger.debug("강아지 사진을 분석할 수 없음")
@@ -99,6 +109,8 @@ class AnalysisPetSerializer(serializers.ModelSerializer):
             raise ValidationError("강아지 사진을 분석할 수 없습니다.")
 
         # TODO: 사람 감정분석 ( 사람 인식은 필수가 아니므로 exception raise 불 필요)
+
+        print("2time :", time.time() - start)
 
         return analysis
 
