@@ -49,17 +49,32 @@ class AnalysisHumanView(GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         slug = request.data.get("slug")
+        answers = request.data.get("answers")
         analysis = Analysis.objects.get(slug=slug)
+
         choices = []
         needs = []
         chemistry = 0
-        for item in request.data["answer"]:
-            choice_id = item["choice_id"]
-            choices.append(choice_id)
-            need = Need.objects.filter(choice=choice_id).first()
-            needs.append(need)
 
-        choice_instances = QuestionChoice.objects.filter(id__in=choices)
+        # 첫번째 질문 처리
+
+        # 2번부터
+        question_seq = 2
+
+        for item in answers:
+            choice_id = item["choice_id"]
+
+            try:
+                question_choice = QuestionChoice.objects.get(
+                    question=question_seq, sort_order=choice_id
+                )
+                question_seq += 1
+
+                need = Need.objects.filter(choice=question_choice.id).first()
+                choices.append(question_choice)
+                needs.append(need)
+            except QuestionChoice.DoesNotExist:
+                print(f"없는 선택지를 선택하였습니다 {question_seq}, {choice_id}")
 
         # 같은 감정일때 /2
         if analysis.is_dog_emotion_negative == analysis.is_human_emotion_negative:
@@ -72,10 +87,10 @@ class AnalysisHumanView(GenericAPIView):
             # 강아지 부정
             chemistry += abs(sub)
 
-        chemistry += sum(choice.increase_percentage for choice in choice_instances)
+        chemistry += sum(choice.increase_percentage for choice in choices)
 
         analysis.chemistry_percentage = chemistry
-        analysis.answer.set(choice_instances)
+        analysis.answer.set(choices)
         analysis.needs.set(needs)
 
         serializer = AnalysisResultSerializer(instance=analysis)
