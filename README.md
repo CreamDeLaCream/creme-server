@@ -34,8 +34,8 @@
 - 반려인들의 이러한 궁금증을 해소하고, 충분한 교감을 형성하기 위해, 반려동물의 감정 상태를 분석해 반려동물의 삶의 질을 높여주는 것이 이 서비스의 주된 목적이다.
 
 **페르소나인 최서연씨와 같이 반려동물과 지속된 교감이 어려운 반려인을 위한 감정 분석 솔루션 서비스**
-![](https://velog.velcdn.com/images/zxcvbee/post/1ebfeaa9-d25b-49c2-a26b-9d958fb706ab/image.51)
-![](https://velog.velcdn.com/images/zxcvbee/post/e78aa02e-bfa1-46e9-9e01-9ad032a8107c/image.05)
+<img width="1775" alt="스크린샷 2023-02-11 오전 3 44 51" src="https://user-images.githubusercontent.com/77164776/218174214-1d221922-ffc8-4633-a284-4e32df74f71a.png">
+<img width="1775" alt="스크린샷 2023-02-11 오전 3 45 05" src="https://user-images.githubusercontent.com/77164776/218174257-2a151a99-e1f0-44d7-9729-041422a633d6.png">
 
 
 ## 3. 프로젝트 구성도
@@ -45,16 +45,13 @@
 ## 4. 서비스 주요 기능 설명
 
 ### 주요 기능
-
-![](https://velog.velcdn.com/images/zxcvbee/post/b55fd2ee-85fe-4048-9d9c-36be05212bc4/image.14)
+<img width="1778" alt="스크린샷 2023-02-11 오전 3 45 14" src="https://user-images.githubusercontent.com/77164776/218174068-48ec7588-094e-4dcc-a31d-256b826b7068.png">
 
 ### 서브 기능
-
-![](https://velog.velcdn.com/images/zxcvbee/post/d5188d22-1844-4d76-94fd-0355b0ea0e0a/image.35)
-
+<img width="701" alt="스크린샷 2023-02-11 오전 3 45 35" src="https://user-images.githubusercontent.com/77164776/218174006-b15db9a3-84c4-4343-bcfd-3664c0293805.png">
   
 ## 5. erd 설계
-![erd](https://velog.velcdn.com/images/zxcvbee/post/169e7c0d-29f4-410e-aa9a-cefaadb27427/image.38)
+<img width="808" alt="스크린샷 2023-02-11 오전 3 42 38" src="https://user-images.githubusercontent.com/77164776/218174135-74c71448-a350-444d-84ae-e0550501ce34.png">
 
 ## 6. 프로젝트 팀원 역할 분담
 
