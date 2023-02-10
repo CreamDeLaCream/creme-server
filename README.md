@@ -48,7 +48,8 @@
 <img width="1778" alt="스크린샷 2023-02-11 오전 3 45 14" src="https://user-images.githubusercontent.com/77164776/218174068-48ec7588-094e-4dcc-a31d-256b826b7068.png">
 
 ### 서브 기능
-<img width="701" alt="스크린샷 2023-02-11 오전 3 45 35" src="https://user-images.githubusercontent.com/77164776/218174006-b15db9a3-84c4-4343-bcfd-3664c0293805.png">
+<img width="1782" alt="스크린샷 2023-02-11 오전 3 54 19" src="https://user-images.githubusercontent.com/77164776/218174526-b586ece3-e05b-4876-bd12-a04b8693b3e6.png">
+
   
 ## 5. erd 설계
 <img width="808" alt="스크린샷 2023-02-11 오전 3 42 38" src="https://user-images.githubusercontent.com/77164776/218174135-74c71448-a350-444d-84ae-e0550501ce34.png">
