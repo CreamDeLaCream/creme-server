@@ -46,6 +46,8 @@
 
 ### 주요 기능
 <img width="1778" alt="스크린샷 2023-02-11 오전 3 45 14" src="https://user-images.githubusercontent.com/77164776/218174068-48ec7588-094e-4dcc-a31d-256b826b7068.png">
+<img width="1786" alt="스크린샷 2023-02-11 오전 3 56 24" src="https://user-images.githubusercontent.com/77164776/218174942-5fc121cc-d905-4788-8f65-e49e7ed96e48.png">
+
 
 ### 서브 기능
 <img width="1782" alt="스크린샷 2023-02-11 오전 3 54 19" src="https://user-images.githubusercontent.com/77164776/218174526-b586ece3-e05b-4876-bd12-a04b8693b3e6.png">
